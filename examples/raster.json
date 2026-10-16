@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "city": "MIASTO",
+  "teryt": "106101",
+  "election": "prezydent_2025",
+  "mode": "raster",
+  "crs": "EPSG:2180",
+  "io_backend": "arcpy",
+  "output": "../wyniki",
+  "boundary": {"path": "../dane/miasto.geojson"},
+  "addresses": {"path": "../dane/punkty_referencyjne.geojson", "fields": {"id": "ID_IIP", "teryt": "TERYT_GMI", "number": "NR_KOMISJI"}},
+  "raster": {
+    "path": "../dane/granice_RGB.tif",
+    "options": {"target_rgb": [220,0,0], "color_tolerance": 100, "closing_pixels": 1, "min_seeds": 3, "minimum_share": 0.75, "boundary_margin": 2, "max_pixels": 25000000},
+    "assignments": {}
+  },
+  "rounds": [{"path": "../dane/T1.csv"}, {"path": "../dane/T2.csv"}],
+  "backends": {"voronoi": "python", "neighbors": "python", "raster": "python"},
+  "add_to_project": true
+}

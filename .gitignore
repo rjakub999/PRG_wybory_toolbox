@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*.pyt.xml
+.pytest_cache/
+.venv/
+*.lock
+*.gdb/
+*.gpkg
+*.gpkg-shm
+*.gpkg-wal
+*.aprx
+*.lyrx
+*.png
+*.pdf
+*.tif
+*.tiff
+*.csv
+*.xlsx
+*.geojson
+schema.ini
+wyniki/
+test_outputs/
+examples/wyniki/
+# Source data remain local, outside version control.

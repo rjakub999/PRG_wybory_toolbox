@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "city": "Łódź",
+  "teryt": "106101",
+  "election": "prezydent_2025",
+  "mode": "polygons",
+  "crs": "EPSG:2180",
+  "io_backend": "arcpy",
+  "output": "../wyniki",
+  "polygons": {"path": "../lodz_obwody.geojson", "number_field": "NR_OBWODU", "repair_invalid": true, "max_repair_area_change_m2": 1},
+  "rounds": [{"path": "../Lodz_I_tura.csv"}, {"path": "../Lodz_II_tura.csv"}],
+  "backends": {"voronoi": "python", "neighbors": "python", "raster": "python"},
+  "export_gpkg": false,
+  "add_to_project": true
+}

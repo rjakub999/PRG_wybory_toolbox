@@ -1,0 +1,3 @@
+# Only for street fitting and RGB raster reconstruction respectively.
+networkx>=3.2,<4
+rasterio>=1.3,<2

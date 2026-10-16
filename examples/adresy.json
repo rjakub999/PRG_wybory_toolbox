@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "city": "MIASTO",
+  "teryt": "106101",
+  "election": "prezydent_2025",
+  "mode": "addresses",
+  "crs": "EPSG:2180",
+  "io_backend": "arcpy",
+  "output": "../wyniki",
+  "boundary": {"path": "../dane/miasto.geojson"},
+  "addresses": {
+    "path": "../dane/PRG.gdb/PunktyAdresowe",
+    "fields": {"id": "ID_IIP", "teryt": "TERYT_GMI", "street": "NAZWA_ULC", "house": "NUMER_PORZ", "number": "NR_KOMISJI"}
+  },
+  "descriptions": {"path": "../dane/opisy.xlsx", "mapping": {"sheet": "Arkusz1", "teryt": "Teryt", "number": "Numer", "kind": "Typ obwodu", "description": "Opis granic"}},
+  "strict_rules": true,
+  "neighbors": {"enabled": true, "k": 5, "max_distance": 250, "min_neighbors": 3, "minimum_share": 0.6, "apply": false},
+  "roads": {"path": "../dane/ulice.geojson", "options": {"max_distance": 30, "min_length": 40, "min_support": 0.7, "angle": 30}},
+  "rounds": [{"path": "../dane/T1.csv"}, {"path": "../dane/T2.csv"}],
+  "backends": {"voronoi": "python", "neighbors": "python", "raster": "python"},
+  "add_to_project": true
+}
