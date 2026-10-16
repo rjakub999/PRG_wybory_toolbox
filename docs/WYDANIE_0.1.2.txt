@@ -1,0 +1,11 @@
+﻿Wydanie dystrybucyjne 0.1.2, 16.10.2026
+Algorytmy pozostają bez zmian względem 0.1.1. Dodano plan .esriAddInX,
+powtarzalny skrypt pakowania i instrukcje dotyczące konfiguracji i geometrii.
+Przykład examples/lodz.json zawiera naprawę samoprzecięć 229, 79, 234.
+Narzędzie 01 tworzy tylko JSON; do obliczeń służy narzędzie 02.
+Konfiguracja z kreatora domyślnie nie włącza naprawy. Aby ją włączyć, dodaj
+w obiekcie polygons: "repair_invalid": true, "max_repair_area_change_m2": 1.
+Po zmianie JSON rozpocznij nowy przebieg (puste pole wznowienia).
+Naprawa nie usuwa nakładań ani luk pomiędzy obwodami; sprawdź raport topologii.
+Nie kopiuj konfiguracji z bezwzględnymi ścieżkami autora na inne stanowisko.
+Dołączony przykład ma ścieżki względne i gotowe dane Łodzi.

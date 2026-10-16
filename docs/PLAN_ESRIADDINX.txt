@@ -1,0 +1,51 @@
+﻿PLAN DODATKU PRG WYBORY .esriAddInX — 16.10.2026
+Status: plan; paczka 0.1.2 nadal zawiera Python Toolbox, nie skompilowany dodatek.
+
+1. Architektura
+Interfejs C# / WPF / MVVM w ArcGIS Pro SDK for .NET. Istniejący silnik Python
+oraz PRGWybory.pyt pozostają wspólne dla obu sposobów uruchamiania.
+Dodatek wywołuje narzędzia przez Geoprocessing.ExecuteToolAsync; dołącza kod
+Python jako zasoby wdrożeniowe. Wyniki i konfiguracje zapisuje w folderze
+wybranym przez użytkownika, nie w katalogu instalacji dodatku.
+
+2. Prototyp
+Ustalić wersję ArcGIS Pro pracodawcy i dopasować SDK/.NET/Visual Studio
+według oficjalnych wymagań tej wersji (nie zakładać zgodności wszystkich 3.x).
+Zbudować przycisk i panel, wywołać diagnostykę i jeden etap na danych Łodzi.
+Sprawdzić odnajdywanie dołączonego toolboxa i aktywnego środowiska Python.
+
+3. Panel użytkownika
+Kreator: miasto i TERYT -> źródło granic (poligony/adresy/raster) -> protokoły
+obu tur -> kontrola -> przetwarzanie -> mapy i eksport. Wybór warstw z mapy,
+pól z listy, zapisywanie/otwieranie JSON, osobne przyciski konfiguracji i startu.
+Opcjonalna naprawa samoprzecięć z limitem zmiany powierzchni i raportem.
+Domyślnie bez automatycznej zmiany źródeł; podgląd błędnych obiektów.
+
+4. Uruchamianie
+Postęp i komunikaty GP, blokada równoczesnych przebiegów, otwarcie folderu
+wyników i raportów. Obsługa anulowania wymaga również punktów kontroli w
+pętlach Python; sam przycisk C# nie gwarantuje przerwania obliczeń.
+Wznowienie zachowuje obecne kontrole zgodności konfiguracji i źródeł.
+
+5. Licencje i środowisko
+Basic pozostaje obsługiwany przez backend python. Wyższa licencja także
+uruchamia ten backend. Wariant esri pozostaje zablokowany z wyjaśnieniem;
+ten plan nie obejmuje implementacji algorytmów dla wyższej licencji.
+Add-in nie usuwa potrzeby aktywnej licencji Pro i zależności Python. Diagnostyka
+pokazuje brakujące biblioteki i instrukcję klonowania; bez cichej instalacji
+w domyślnym środowisku. Odbiorca nie potrzebuje Visual Studio ani SDK.
+
+6. Odbiór i dystrybucja
+Test na Basic i stanowisku pracodawcy: zgodność tabel i geometrii z .pyt,
+polskie znaki i spacje w ścieżkach, błędne CSV, samoprzecięcia, anulowanie,
+wznowienie, brak zależności, zapis projektu i GPKG. Łódź: 283 obwody stałe,
+40 odrębnych w tabelach; sumy ważnych 342601 i 361264 dla stałych.
+Dostarczyć .esriAddInX, instrukcję zależności i zgodności wersji, changelog
+oraz sumy SHA-256. Podpis cyfrowy zależy od polityki IT pracodawcy; ustalić
+zaufanego wydawcę przed wdrożeniem. Nie obiecywać instalacji jednym kliknięciem
+bez wcześniejszego przygotowania środowiska.
+
+Źródła oficjalne:
+https://github.com/Esri/arcgis-pro-sdk
+https://doc.esri.com/en/arcgis-pro/latest/sdk/api-reference/conceptdocs/docs/ProConcepts-Geoprocessing.html
+https://github.com/Esri/arcgis-pro-sdk-community-samples/tree/master/Geoprocessing/CallScriptFromNet

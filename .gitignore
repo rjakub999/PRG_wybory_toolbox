@@ -22,3 +22,7 @@ wyniki/
 test_outputs/
 examples/wyniki/
 # Source data remain local, outside version control.
+
+# Local distributions and cloned Python environment
+dystrybucja/
+prg-wybory_env/
