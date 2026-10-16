@@ -2,7 +2,10 @@
 
 Python Toolbox dla **ArcGIS Pro 3.7 Basic**, do przygotowania granic obwodów,
 połączenia wyników dwóch tur wyborów i utworzenia kartogramów dla kolejnych miast.
-Interfejs i komunikaty są po polsku. Wersja 0.1.0.
+Interfejs i komunikaty są po polsku. Wersja 0.1.1.
+
+Poprawka 0.1.1: pole nowej konfiguracji JSON otwiera okno zapisu (Output),
+a nie wyboru istniejącego pliku. Brakujące rozszerzenie .json jest dopisywane.
 
 ## Szybki start w ArcGIS Pro
 

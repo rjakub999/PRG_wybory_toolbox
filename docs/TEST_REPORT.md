@@ -63,3 +63,10 @@ Warstwa oficjalna i protokoły muszą dotyczyć tej samej elekcji.
 Nie przetestowano interakcji ręcznych z formularzami w GUI; przetestowano ArcPy,
 import skrzynki i działanie jej kodu na licencji Basic.
 Przyszły backend Esri nie zawiera kodu i nie został przetestowany.
+
+## Poprawka 0.1.1 — konfiguracja JSON
+
+Dwa dodatkowe testy ArcPy zakończyły się sukcesem: parametr konfiguracji jest
+plikiem wyjściowym z filtrem JSON i automatycznym rozszerzeniem, a rzeczywiste
+wywołanie narzędzia Konfiguracja tworzy nowy plik. Ponowne użycie tej samej
+ścieżki jest blokowane i nie zmienia istniejącej zawartości.

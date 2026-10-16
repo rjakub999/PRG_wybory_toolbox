@@ -8,9 +8,9 @@ ROOT=Path(__file__).resolve().parent
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
 
 
-def parameter(name,label,datatype,required=True,default=None):
+def parameter(name,label,datatype,required=True,default=None,direction="Input"):
     p=arcpy.Parameter(displayName=label,name=name,datatype=datatype,
-        parameterType='Required' if required else 'Optional',direction='Input')
+        parameterType='Required' if required else 'Optional',direction=direction)
     if default is not None: p.value=default
     return p
 
@@ -45,15 +45,30 @@ class Konfiguracja:
            parameter('number_field','Pole numeru obwodu w poligonach','GPString',default='NR_OBWODU'),
            parameter('round1','Protokoły I tury (CSV/XLSX)','DEFile'),parameter('round2','Protokoły II tury (CSV/XLSX)','DEFile'),
            parameter('folder','Folder wyników','DEFolder'),parameter('epsg','EPSG układu obliczeniowego w metrach','GPLong',default=2180),
-           parameter('config','Ścieżka nowej konfiguracji JSON','DEFile'),
+           parameter('config','Ścieżka nowej konfiguracji JSON','DEFile',direction='Output'),
            parameter('voronoi','Backend Voronoi','GPString',default='python'),
            parameter('neighbors','Backend sąsiedztwa','GPString',default='python'),
            parameter('raster','Backend rekonstrukcji rastra','GPString',default='python')]
+        p[9].filter.list=['json']
         for item in p[10:]: item.filter.type='ValueList'; item.filter.list=['python','esri']
         return p
+    def updateParameters(self,p):
+        if p[9].valueAsText:
+            path=Path(p[9].valueAsText)
+            if not path.suffix:
+                p[9].value=str(path.with_suffix('.json'))
+    def updateMessages(self,p):
+        if p[9].valueAsText:
+            path=Path(p[9].valueAsText)
+            if path.exists():
+                p[9].setErrorMessage('Ten plik już istnieje. Wskaż nową nazwę JSON lub użyj istniejącego pliku w narzędziu 02.')
+            elif path.suffix.lower()!='.json':
+                p[9].setErrorMessage('Nazwa pliku musi mieć rozszerzenie .json.')
     def execute(self,p,messages):
         from prg_wybory.common import save_json,teryt
         config=Path(p[9].valueAsText)
+        if not config.suffix: config=config.with_suffix('.json')
+        if config.suffix.lower()!='.json': raise ValueError('Nazwa pliku musi mieć rozszerzenie .json.')
         if config.exists(): raise ValueError('Konfiguracja istnieje. Wskaż nowy plik albo edytuj istniejący.')
         cfg=dict(schema_version=1,city=p[0].valueAsText,teryt=teryt(p[1].valueAsText),election=p[2].valueAsText,
             mode='polygons',crs=f'EPSG:{p[8].valueAsText}',io_backend='arcpy',output=p[7].valueAsText,
@@ -61,7 +76,7 @@ class Konfiguracja:
             rounds=[dict(path=p[5].valueAsText),dict(path=p[6].valueAsText)],
             backends=dict(voronoi=p[10].valueAsText,neighbors=p[11].valueAsText,raster=p[12].valueAsText),
             export_gpkg=False,add_to_project=True)
-        save_json(config,cfg); arcpy.AddMessage(str(config))
+        save_json(config,cfg); p[9].value=str(config); arcpy.AddMessage(str(config))
         if 'esri' in cfg['backends'].values(): arcpy.AddWarning('Zapisano przyszły backend Esri; nie jest jeszcze zaimplementowany. Obliczenia nie uruchomią się w tym trybie.')
 
 
